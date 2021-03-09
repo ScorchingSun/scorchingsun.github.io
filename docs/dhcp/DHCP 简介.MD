@@ -2,7 +2,7 @@
 
 # 简介
 
-**DHCP(动态主机配置协议)**  是一个局域网的网络协议。
+**DHCP(动态主机配置协议)**  是一个局域网的网络协议，使用UDP协议工作，常用的2个端口：67(DHCP server)，68(DHCP client)。。
 
 # 主要功能
 
@@ -17,6 +17,67 @@ DHCP服务器提供了三种IP分配方式：
 1. **自动分配**：当DHCP客户端第一次成功的从DHCP服务器获取一个IP地址后，就永久的使用这个IP地址。
 2. **手动分配**：由DHCP服务器管理员专门指定的IP地址
 3. **动态分配（常用）**：当客户端第一次从DHCP服务器获取到IP地址后，并非永久使用该地址，每次使用完后，DHCP客户端就需要释放这个IP，供其他客户端使用。
+
+## DHCP报文
+
+![image-20210121101653854](https://img-blog.csdn.net/20180513123625847?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xtNDA5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+### 报文内容解释
+
+* Op： 报文类型，分为 两大类： Request（1） 和 Reply（2）
+* HW Type： 硬件类型，一般是以太网：1
+* HW Len： 硬件地址长度，单位字节。对应以太网：6（mac地址长度为6字节48bit）
+* Transaction ID：事务ID，随机数，有客户端生成，服务器Reply时，会把Request中的Transaction拷贝到Reply报文中。
+* Secs： 距离第一次发射IP请求或Renew请求过去的秒数
+* Flags：标志位，目前仅第一个bit有使用，置1 标明广播
+* Client IP Address：当前客户端的IP地址，如果当前客户端没有IP地址，则置0
+* Your IP Address： 服务器向客户端提供IP地址时，会把IP地址填入本字段
+* （Next）Server IP Address：客户端引导时需要的另一个服务器的IP地址
+* Gateway （Relay） IP Address： 网关（中继）IP地址，有DHCP 中继器在转发DHCP报文的时候填入
+* Server Name： Server名字，有64bytes，一般不使用，填充为0
+* Boot File name： boot file的路径，128bytes， 一般不使用，填充为0
+* Option： 选项，不定长度。
+
+### Option字段
+
+| Option | 名称                   | 描述                                            |
+| ------ | :--------------------- | ----------------------------------------------- |
+| 0      | Pad                    | 填充位                                          |
+| 1      | Subnet Mask            | 子网 掩码                                       |
+| 3      | Router Address         | 路由器地址                                      |
+| 6      | DNS                    | DNS server                                      |
+| 15     | DN                     | 域名                                            |
+| 50     | Requested IP Address   | 请求的IP地址                                    |
+| 51     | Address Lease Time     | 地址租约时间                                    |
+| 53     | **DHCP Message Type**  | DHCP消息类型，如Discover、Request、Offer、ACK等 |
+| 54     | Server Identifier      | 服务器标识                                      |
+| 55     | Parameter Request List | 参数请求列表                                    |
+| 56     | DHCP Error Message     | DHCP 错误消息                                   |
+| 58     | Lease Renewal Time     | 租约续期时间                                    |
+| 59     | Lease Rebinding Time   | 租约重新设定的时间                              |
+| 61     | Client Identifier      | 客户标识                                        |
+| 119    | Domain Search List     | 域名查找列表                                    |
+| 255    | End                    | 结束                                            |
+
+### DHCP Message Type(53)
+
+在DHCP Option中，我们着重看下DHCP Message Type（53），DHCP Message Type标识DHCP消息类型，主要有一下类型：
+
+| DHCP 消息类型       | 对应的Option值 |
+| :------------------ | -------------- |
+| DHCPDISCOVER        | 1              |
+| DHCPOFFER           | 2              |
+| DHCPREQUEST         | 3              |
+| DHCPDECLINE         | 4              |
+| DHCPACK             | 5              |
+| DHCPNAK             | 6              |
+| DHCPRELEASE         | 7              |
+| DHCPINFORM          | 8              |
+| DHCPFORCERENEW      | 9              |
+| DHCPLEASEQUERY      | 10             |
+| DHCPLEASEUNASSIGNED | 11             |
+| DHCPLEASEUNKNOWN    | 12             |
+| DHCPLEASEACTIVE     | 13             |
 
 ## 租约过程
 
