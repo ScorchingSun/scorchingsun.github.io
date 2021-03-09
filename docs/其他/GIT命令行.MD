@@ -8,6 +8,14 @@ git checkout -b B#luxiaolei origin/B#luxiaolei
 
 git checkout B#luxiaolei
 
+### 提交代码到分支
+
+git add *
+
+git commit -m "xxx"
+
+git push origin B#luxiaolei
+
 ### 同步master分支代码到其他分支
 
 1. 切换到master分支
