@@ -14,9 +14,9 @@
 # Welcome to my page
 <div id="outline">
   <div id="tree">
-    ## Tree
+      <h2>Tree</h2>
   </div>
   <div id="content">
-    ## Let's learn and discover fun things together.
+      <h2>Let's learn and discover fun things together.</h2>
   </div>
 </div>
