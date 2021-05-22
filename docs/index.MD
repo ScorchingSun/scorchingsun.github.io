@@ -1,6 +1,22 @@
-<h1>Welcome to my page</h1>
-<script>
-  alert("test");
-</script>
+<style type="text/css">
+#outline{
+    display: flex;
+    justify-content: space-around：
+}
+#tree{
+    width: 20%
+}
+#content{
+    width: 80%
+}
+</style>
 
-<h2>Let's learn and discover fun things together.</h2>
+# Welcome to my page
+<div id="outline">
+  <div id="tree">
+    ## Tree
+  </div>
+  <div id="content">
+    ## Let's learn and discover fun things together.
+  </div>
+</div>
