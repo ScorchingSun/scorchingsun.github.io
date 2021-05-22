@@ -32,31 +32,31 @@ git push origin B#luxiaolei
 
 ### 同步master分支代码到其他分支
 
-1. 切换到master分支
+#### 1. 切换到master分支
 
 ```shell
 git checkout master
 ```
 
-2. 更新远程最新代码
+#### 2. 更新远程最新代码
 
 ```shell
 git pull
 ```
 
-3. 切换到其他分支
+#### 3. 切换到其他分支
 
 ```shell
 git checkout B#luxiaolei
 ```
 
-4. 合并master到分支
+#### 4. 合并master到分支
 
 ```shell
 git merge master
 ```
 
-5. 将其他分支同步的master分支代码push到远程分支
+#### 5. 将其他分支同步的master分支代码push到远程分支
 
 ```shell
 git push origin B#luxiaolei
